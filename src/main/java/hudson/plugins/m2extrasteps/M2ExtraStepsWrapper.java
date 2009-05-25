@@ -98,10 +98,6 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
             @Override
             public boolean tearDown(AbstractBuild build, BuildListener listener) throws IOException,
                                                                                         InterruptedException {
-                
-                // save build
-                build.keepLog();
-                
                 return executeBuildSteps(postBuildSteps, build, launcher, listener);
             }
         };
