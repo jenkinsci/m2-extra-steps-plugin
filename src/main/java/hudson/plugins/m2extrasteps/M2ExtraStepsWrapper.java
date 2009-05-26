@@ -13,11 +13,7 @@ import hudson.model.Cause;
 import hudson.model.Descriptor;
 import hudson.model.FreeStyleProject;
 import hudson.model.Item;
-import hudson.model.ParameterDefinition;
-import hudson.model.ParameterValue;
-import hudson.model.ParametersAction;
-import hudson.model.ParametersDefinitionProperty;
-import hudson.model.StringParameterValue;
+import hudson.model.Result;
 import hudson.tasks.BuildStep;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
@@ -36,6 +32,7 @@ import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
  * Wraps a build with pre and post build steps.  These steps can take
@@ -49,11 +46,11 @@ import org.kohsuke.stapler.StaplerResponse;
 public class M2ExtraStepsWrapper extends BuildWrapper {
     private List<Builder> preBuildSteps = new ArrayList<Builder>();
     private List<Builder> postBuildSteps = new ArrayList<Builder>();
-    
-    /**
-     * @stapler-constructor
-     */
-    public M2ExtraStepsWrapper() {
+    private String runIfResult;
+
+    @DataBoundConstructor
+    public M2ExtraStepsWrapper(final String runIfResult) {
+        this.runIfResult = runIfResult;
     }
     
     /**
@@ -80,8 +77,36 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
     /**
      * @param postBuildSteps The postBuildSteps to set.
      */
-    public void setPostBuildSteps(List<Builder> postSuccessBuildSteps) {
-        this.postBuildSteps = postSuccessBuildSteps;
+    public void setPostBuildSteps(List<Builder> postBuildSteps) {
+        this.postBuildSteps = postBuildSteps;
+    }
+    
+
+    /**
+     * @return Returns the runIfResult value.
+     */
+    public String getRunIfResult() {
+        return runIfResult;
+    }
+
+    /**
+     * @param runIfResult The runIfResult to set.
+     */
+    public void setRunIfResult(String runIfResult) {
+        this.runIfResult = runIfResult;
+    }
+
+    private boolean shouldPostStepsRun(AbstractBuild build) {
+        if (runIfResult.equals("success")) {
+            return build.getResult().isBetterOrEqualTo(Result.SUCCESS);
+        }
+        else if (runIfResult.equals("unstable")) {
+            return build.getResult().isBetterOrEqualTo(Result.UNSTABLE);
+        }
+        // If we get this far, return true regardless.
+        else {
+            return true;
+        }
     }
     
     @Override
@@ -98,7 +123,12 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
             @Override
             public boolean tearDown(AbstractBuild build, BuildListener listener) throws IOException,
                                                                                         InterruptedException {
-                return executeBuildSteps(postBuildSteps, build, launcher, listener);
+                if (shouldPostStepsRun(build)) {
+                    return executeBuildSteps(postBuildSteps, build, launcher, listener);
+                }
+                else {
+                    return true;
+                }
             }
         };
     }
@@ -141,9 +171,10 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
         
         @Override
         public BuildWrapper newInstance(StaplerRequest req, JSONObject formData) throws FormException {
-            M2ExtraStepsWrapper instance = new M2ExtraStepsWrapper();
+            M2ExtraStepsWrapper instance = req.bindJSON(M2ExtraStepsWrapper.class, formData);
             instance.preBuildSteps = Descriptor.newInstancesFromHeteroList(req, formData, "preBuildSteps", Builder.all());
             instance.postBuildSteps = Descriptor.newInstancesFromHeteroList(req, formData, "postBuildSteps", Builder.all());
+
             return instance;
         }
         

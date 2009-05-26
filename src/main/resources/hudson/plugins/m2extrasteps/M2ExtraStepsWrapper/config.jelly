@@ -3,24 +3,58 @@
 	xmlns:p="/lib/hudson/project">
 
   <f:block>
-    
-    <div style="padding-left: 2em">
-      <!-- Pre build steps -->
-      <label class="attach-previous">${%Steps to run before mvn build}</label>
-      <f:hetero-list name="preBuildSteps" hasHeader="true"
-                     descriptors="${h.getBuilderDescriptors(it)}"
-                     items="${instance.preBuildSteps}"
-                     addCaption="${%Add pre-build step}"/>
-      
-      <br />
-      
-      <!-- Post build steps -->
-      <label class="attach-previous">${%Steps to run after mvn build}</label>
-      <f:hetero-list name="postBuildSteps" hasHeader="true"
-                     descriptors="${h.getBuilderDescriptors(it)}"
-                     items="${instance.postBuildSteps}"
-                     addCaption="${%Add post-build step}"/>
+    <div style="padding-left: 2em">    
+      <fieldset style="margin-bottom:1em">
+        <table width="100%">
+	  <f:section title="${%Steps to run before mvn build}">
+	    <f:nested>
+	      <f:hetero-list name="preBuildSteps" hasHeader="true"
+			     descriptors="${h.getBuilderDescriptors(it)}"
+			     items="${instance.preBuildSteps}"
+			     addCaption="${%Add pre-build step}"/>
+	    </f:nested>
+	  </f:section>
+	  <f:section title="${%Steps to run after mvn build}">
+	    <f:nested>
+	      <f:hetero-list name="postBuildSteps" hasHeader="true"
+			     descriptors="${h.getBuilderDescriptors(it)}"
+			     items="${instance.postBuildSteps}"
+			     addCaption="${%Add post-build step}"/>
+	    </f:nested>
+	  </f:section>
+	  <f:section title="${%Post-Build Run Criteria}">
+	    <f:entry description="Should the post-build steps run only for successful builds, etc">
+	      
+	      <f:radio name="m2-extra-steps.runIfResult" value="success" checked="${instance.runIfResult =='success'}" id="runIfResult.success" />
+	      <st:nbsp />
+	      <label for="runIfResult.success">Run only if build succeeds</label>
+	      <st:nbsp />
+	      <f:radio name="m2-extra-steps.runIfResult" value="unstable" checked="${instance.runIfResult =='unstable'}" id="runIfResult.unstable" />
+	      <st:nbsp />
+	      <label for="runIfResult.unstable">Run only if build succeeds or is unstable</label>
+	      <st:nbsp />
+	      
+	      <j:if test="${instance != null}">
+		<j:if test="${instance.allCases == null}">
+		  <f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${true}" id="runIfResult.allCases" />
+		</j:if>
+		<j:if test="${instance.allCases != null}">
+		  <f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${instance.runIfResult =='allCases'}" id="runIfResult.allCases" />
+		</j:if>
+	      </j:if>
+	      <j:if test="${instance == null}">
+		<f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${true}" id="runIfResult.allCases" />
+	      </j:if>
+	      <st:nbsp />
+	      <label for="runIfResult.allCases">Run regardless of build result</label>
+	      <st:nbsp />
+	    </f:entry>
+	  </f:section>
+	</table>
+      </fieldset>
     </div>
+
+
   </f:block>
   
 </j:jelly>
