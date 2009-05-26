@@ -10,7 +10,7 @@
   <packaging>hpi</packaging>
   <name>Hudson M2 Extra Steps Plugin</name>
   <description>A plugin providing the ability to add pre- and post-build steps to Maven 2 projects.</description>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/M2+Extra+Steps+Plugin</url>
   <developers>
     <developer>
@@ -26,10 +26,4 @@
       <artifactId>maven-plugin</artifactId>
     </dependency>
   </dependencies>
-
-  <scm>
-    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/m2-extra-steps-1.1</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/m2-extra-steps-1.1</developerConnection>
-    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/m2-extra-steps/tags/m2-extra-steps-1.1</url>
-  </scm>
 </project>
