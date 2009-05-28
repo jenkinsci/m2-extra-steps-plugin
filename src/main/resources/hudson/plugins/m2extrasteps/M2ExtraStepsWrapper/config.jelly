@@ -35,10 +35,10 @@
 	      <st:nbsp />
 	      
 	      <j:if test="${instance != null}">
-		<j:if test="${instance.allCases == null}">
+		<j:if test="${instance.runIfResult == null}">
 		  <f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${true}" id="runIfResult.allCases" />
 		</j:if>
-		<j:if test="${instance.allCases != null}">
+		<j:if test="${instance.runIfResult != null}">
 		  <f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${instance.runIfResult =='allCases'}" id="runIfResult.allCases" />
 		</j:if>
 	      </j:if>
