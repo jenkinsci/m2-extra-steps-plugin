@@ -1,0 +1,7 @@
+<!--
+  This view is used to render the plugin list page. 
+-->
+<div>
+   This plugin allows you to configure actions to run both before and after the
+   core Maven execution of an m2 project. 
+</div>
