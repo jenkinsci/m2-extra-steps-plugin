@@ -49,7 +49,7 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
     private String runIfResult;
 
     @DataBoundConstructor
-    public M2ExtraStepsWrapper(final String runIfResult) {
+        public M2ExtraStepsWrapper(final String runIfResult) {
         this.runIfResult = runIfResult;
     }
     
@@ -110,8 +110,8 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
     }
     
     @Override
-    public Environment setUp(AbstractBuild build, final Launcher launcher, BuildListener listener) throws IOException,
-                                                                                                          InterruptedException {
+        public Environment setUp(AbstractBuild build, final Launcher launcher, BuildListener listener) throws IOException,
+                                                                                                              InterruptedException {
         
         if (!executeBuildSteps(preBuildSteps, build, launcher, listener)) {
             throw new IOException("Could not execute pre-build steps");
@@ -121,8 +121,8 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
         return new Environment() {
             
             @Override
-            public boolean tearDown(AbstractBuild build, BuildListener listener) throws IOException,
-                                                                                        InterruptedException {
+                public boolean tearDown(AbstractBuild build, BuildListener listener) throws IOException,
+                                                                                            InterruptedException {
                 if (shouldPostStepsRun(build)) {
                     return executeBuildSteps(postBuildSteps, build, launcher, listener);
                 }
@@ -162,15 +162,15 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
 
     
     @Extension
-    public static final class DescriptorImpl extends BuildWrapperDescriptor {
+        public static final class DescriptorImpl extends BuildWrapperDescriptor {
         
         @Override
-        public String getDisplayName() {
+            public String getDisplayName() {
             return "Configure M2 Extra Build Steps";
         }
         
         @Override
-        public BuildWrapper newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+            public BuildWrapper newInstance(StaplerRequest req, JSONObject formData) throws FormException {
             M2ExtraStepsWrapper instance = req.bindJSON(M2ExtraStepsWrapper.class, formData);
             instance.preBuildSteps = Descriptor.newInstancesFromHeteroList(req, formData, "preBuildSteps", Builder.all());
             instance.postBuildSteps = Descriptor.newInstancesFromHeteroList(req, formData, "postBuildSteps", Builder.all());
@@ -179,12 +179,12 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
         }
         
         @Override
-        public boolean isApplicable(AbstractProject<?, ?> item) {
+            public boolean isApplicable(AbstractProject<?, ?> item) {
             return (item instanceof AbstractMavenProject);
         }
         
         @Override
-        public String getHelpFile() {
+            public String getHelpFile() {
             return "/plugin/m2-extra-steps/help-projectConfig.html";
         }
     }
