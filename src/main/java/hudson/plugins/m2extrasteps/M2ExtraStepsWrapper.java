@@ -97,16 +97,24 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
     }
 
     private boolean shouldPostStepsRun(AbstractBuild build) {
-        if (runIfResult.equals("success")) {
-            return build.getResult().isBetterOrEqualTo(Result.SUCCESS);
-        }
-        else if (runIfResult.equals("unstable")) {
-            return build.getResult().isBetterOrEqualTo(Result.UNSTABLE);
-        }
-        // If we get this far, return true regardless.
-        else {
+        // If runIfResult is "allCases", we're running regardless.
+        if (runIfResult.equals("allCases")) {
             return true;
         }
+        else {
+            // Otherwise, we're going to need to compare against the build result.
+            Result buildResult = build.getResult();
+            
+            if (runIfResult.equals("success")) {
+                return ((buildResult==null) || (buildResult.isBetterOrEqualTo(Result.SUCCESS)));
+            }
+            else if (runIfResult.equals("unstable")) {
+                return ((buildResult==null) || (buildResult.isBetterOrEqualTo(Result.UNSTABLE)));
+            }
+        }
+
+        // If we get down here, something weird's going on. Return false.
+        return false;
     }
     
     @Override
