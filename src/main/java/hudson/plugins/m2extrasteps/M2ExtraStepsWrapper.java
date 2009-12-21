@@ -1,13 +1,19 @@
 package hudson.plugins.m2extrasteps;
 
+import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Launcher;
 import hudson.maven.AbstractMavenProject;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
+import hudson.model.Computer;
 import hudson.model.Descriptor;
+import hudson.model.Hudson;
 import hudson.model.Result;
+import hudson.slaves.NodeProperty;
+import hudson.slaves.EnvironmentVariablesNodeProperty;
+
 import hudson.tasks.BuildStep;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
@@ -16,6 +22,9 @@ import hudson.tasks.Builder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.sf.json.JSONObject;
 
@@ -108,7 +117,8 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
     @Override
     public Environment setUp(AbstractBuild build, final Launcher launcher, BuildListener listener) throws IOException,
                                                                                                           InterruptedException {
-        
+        build.addAction(new M2ExtraStepsAction());
+            
         if (!executeBuildSteps(preBuildSteps, build, launcher, listener)) {
             throw new IOException("Could not execute pre-build steps");
         }
@@ -185,4 +195,6 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
         }
     }
     
+    private static final Logger LOGGER = Logger.getLogger(M2ExtraStepsWrapper.class.getName());
+
 }
