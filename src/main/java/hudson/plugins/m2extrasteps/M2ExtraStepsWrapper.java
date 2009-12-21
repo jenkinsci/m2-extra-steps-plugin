@@ -94,6 +94,10 @@ public class M2ExtraStepsWrapper extends BuildWrapper {
     }
 
     private boolean shouldPostStepsRun(AbstractBuild build) {
+        // If runIfResult is null, set it to "allCases".
+        if (runIfResult == null) {
+            setRunIfResult("allCases");
+        }
         // If runIfResult is "allCases", we're running regardless.
         if (runIfResult.equals("allCases")) {
             return true;
