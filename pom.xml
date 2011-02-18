@@ -4,14 +4,14 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.326</version>
+    <version>1.377</version>
   </parent>
   <artifactId>m2-extra-steps</artifactId>
   <packaging>hpi</packaging>
-  <name>Hudson M2 Extra Steps Plugin</name>
+  <name>Jenkins M2 Extra Steps Plugin</name>
   <description>A plugin providing the ability to add pre- and post-build steps to Maven 2 projects.</description>
   <version>1.1.4-SNAPSHOT</version>
-  <url>http://wiki.hudson-ci.org/display/HUDSON/M2+Extra+Steps+Plugin</url>
+  <url>http://wiki.jenkins-ci.org/display/JENKINS/M2+Extra+Steps+Plugin</url>
   <developers>
     <developer>
       <id>abayer</id>
