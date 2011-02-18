@@ -24,15 +24,15 @@
 	    </f:nested>
 	  </f:section>
 	  <f:section title="${%Post-Build Run Criteria}">
-	    <f:entry description="Should the post-build steps run only for successful builds, etc">
+	    <f:entry description="${%criteriaDescription}">
 	      
 	      <f:radio name="m2-extra-steps.runIfResult" value="success" checked="${instance.runIfResult =='success'}" />
 	      <st:nbsp />
-	      <label class="attach-previous">Run only if build succeeds</label>
+	      <label class="attach-previous">${%runIfStable}</label>
 	      <st:nbsp />
 	      <f:radio name="m2-extra-steps.runIfResult" value="unstable" checked="${instance.runIfResult =='unstable'}" />
 	      <st:nbsp />
-	      <label class="attach-previous">Run only if build succeeds or is unstable</label>
+	      <label class="attach-previous">${%runIfSuccessful}</label>
 	      <st:nbsp />
 	      
 	      <j:if test="${instance != null}">
@@ -47,7 +47,7 @@
 		<f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${true}" />
 	      </j:if>
 	      <st:nbsp />
-	      <label class="attach-previous">Run regardless of build result</label>
+	      <label class="attach-previous">${%runAlways}</label>
 	      <st:nbsp />
 	    </f:entry>
 	  </f:section>
