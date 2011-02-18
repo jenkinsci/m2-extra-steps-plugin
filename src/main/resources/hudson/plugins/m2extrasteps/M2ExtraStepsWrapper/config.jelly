@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
 	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
 	xmlns:p="/lib/hudson/project">
@@ -25,35 +26,34 @@
 	  <f:section title="${%Post-Build Run Criteria}">
 	    <f:entry description="Should the post-build steps run only for successful builds, etc">
 	      
-	      <f:radio name="m2-extra-steps.runIfResult" value="success" checked="${instance.runIfResult =='success'}" id="runIfResult.success" />
+	      <f:radio name="m2-extra-steps.runIfResult" value="success" checked="${instance.runIfResult =='success'}" />
 	      <st:nbsp />
-	      <label for="runIfResult.success">Run only if build succeeds</label>
+	      <label class="attach-previous">Run only if build succeeds</label>
 	      <st:nbsp />
-	      <f:radio name="m2-extra-steps.runIfResult" value="unstable" checked="${instance.runIfResult =='unstable'}" id="runIfResult.unstable" />
+	      <f:radio name="m2-extra-steps.runIfResult" value="unstable" checked="${instance.runIfResult =='unstable'}" />
 	      <st:nbsp />
-	      <label for="runIfResult.unstable">Run only if build succeeds or is unstable</label>
+	      <label class="attach-previous">Run only if build succeeds or is unstable</label>
 	      <st:nbsp />
 	      
 	      <j:if test="${instance != null}">
 		<j:if test="${instance.runIfResult == null}">
-		  <f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${true}" id="runIfResult.allCases" />
+		  <f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${true}" />
 		</j:if>
 		<j:if test="${instance.runIfResult != null}">
-		  <f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${instance.runIfResult =='allCases'}" id="runIfResult.allCases" />
+		  <f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${instance.runIfResult =='allCases'}" />
 		</j:if>
 	      </j:if>
 	      <j:if test="${instance == null}">
-		<f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${true}" id="runIfResult.allCases" />
+		<f:radio name="m2-extra-steps.runIfResult" value="allCases" checked="${true}" />
 	      </j:if>
 	      <st:nbsp />
-	      <label for="runIfResult.allCases">Run regardless of build result</label>
+	      <label class="attach-previous">Run regardless of build result</label>
 	      <st:nbsp />
 	    </f:entry>
 	  </f:section>
 	</table>
       </fieldset>
     </div>
-
 
   </f:block>
   
