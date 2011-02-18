@@ -26,4 +26,9 @@
       <artifactId>maven-plugin</artifactId>
     </dependency>
   </dependencies>
+  <scm>
+    <connection>scm:git:git://github.com/jenkinsci/m2-extra-steps-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/m2-extra-steps-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/m2-extra-steps-plugin</url>
+  </scm>
 </project>
