@@ -22,7 +22,7 @@
   </developers>
   <dependencies>
     <dependency>
-      <groupId>org.jvnet.hudson.main</groupId>
+      <groupId>org.jenkins-ci.main</groupId>
       <artifactId>maven-plugin</artifactId>
     </dependency>
   </dependencies>
@@ -31,4 +31,50 @@
     <developerConnection>scm:git:git@github.com:jenkinsci/m2-extra-steps-plugin.git</developerConnection>
     <url>https://github.com/jenkinsci/m2-extra-steps-plugin</url>
   </scm>
+
+  <repositories>
+    <repository>
+      <id>repo.jenkins-ci.org</id>
+      <url>http://repo.jenkins-ci.org/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>m.g.o-public</id>
+      <url>http://repo.jenkins-ci.org/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repo.jenkins-ci.org</id>
+      <url>http://repo.jenkins-ci.org/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+      <id>m.g.o-public</id>
+      <url>http://repo.jenkins-ci.org/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
 </project>
