@@ -11,6 +11,7 @@ import hudson.model.Run;
 import hudson.slaves.NodeProperty;
 import hudson.slaves.EnvironmentVariablesNodeProperty;
 
+import hudson.util.DescribableList;
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
 
@@ -26,9 +27,13 @@ public class M2ExtraStepsAction extends InvisibleAction implements EnvironmentCo
                 env.overrideAll(((EnvironmentVariablesNodeProperty)nodeProperty).getEnvVars());
             }
         }
-        for (NodeProperty nodeProperty: Computer.currentComputer().getNode().getNodeProperties()) {
-            if (nodeProperty instanceof EnvironmentVariablesNodeProperty) {
-                env.overrideAll(((EnvironmentVariablesNodeProperty)nodeProperty).getEnvVars());
+        if (Computer.currentComputer() != null && Computer.currentComputer().getNode() != null
+            && Computer.currentComputer().getNode().getNodeProperties() != null)
+        {
+            for (NodeProperty nodeProperty: Computer.currentComputer().getNode().getNodeProperties()) {
+                if (nodeProperty instanceof EnvironmentVariablesNodeProperty) {
+                    env.overrideAll(((EnvironmentVariablesNodeProperty)nodeProperty).getEnvVars());
+                }
             }
         }
     }
